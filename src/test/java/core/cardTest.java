@@ -5,9 +5,9 @@ import junit.framework.TestCase;
 public class cardTest extends TestCase {
 
 	public void testFaceVal() {
-		Card jack = new Card(h, 11, true);
-		Card queen = new Card(h, 12, true);
-		Card king = new Card(h, 13, true);
+		Card jack = new Card(1, 11, true);
+		Card queen = new Card(1, 12, true);
+		Card king = new Card(1, 13, true);
 		
 		assertEquals(10, jack.getVal());
 		assertEquals(10, queen.getVal());
