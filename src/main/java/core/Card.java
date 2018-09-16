@@ -20,7 +20,7 @@ public class Card {
 		}else if(!acesHigh && type == 1){
 			return 1;
 			
-		}else if(type >10) {
+		}else if(type > 10) {
 			return 10;
 			
 		}else {
