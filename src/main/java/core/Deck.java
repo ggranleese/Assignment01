@@ -13,8 +13,6 @@ public class Deck {
 		
 		cards = new Card[52];
 		numCards = 52;
-		initDeck();
-		shuffle();
 	}
 	
 	
@@ -35,13 +33,20 @@ public class Deck {
 		return numCards;
 	}
 	
-	public void removeCard() {
+	public void removeCard(int p) {
 		if(numCards >0){
-			for(int i=0; i<cards.length-1; i++) {
+			for(int i=p; i<cards.length-1; i++) {
 				cards[i] = cards[i+1];
 			}
 			numCards--; 
 		}
+	}
+	
+	public Card dealCard() {
+		Card cardDelt = this.cards[0];
+		this.removeCard(0);
+				
+		return(cardDelt);
 	}
 
 	public void shuffle() {
