@@ -43,15 +43,7 @@ public class Deck {
 			numCards--; 
 		}
 	}
-	
-	public String toString() {
-		String output = "";
-		for(int i=0; i<numCards; i++) {
-			output += "\n" + i + "-" + cards[i].toString();
-		}
-		return output;
-	}
-	
+
 	public void shuffle() {
 		Card[] hold = new Card[52];
 		Random randomizer = new Random();
