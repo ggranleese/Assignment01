@@ -4,15 +4,14 @@ import junit.framework.TestCase;
 
 public class deckTest extends TestCase {
 
-	public void deckResetTest() {
+	public void testDeckReset() {
 		Deck deck = new Deck();
-		
 		assertEquals(52, deck.getSize());
 	}
 
-	public void removeCardTest() {
+	public void testRemoveCard() {
 		Deck deck = new Deck();
-		deck.removeCard(0);
+		deck.removeCard();
 		
 		assertEquals(51, deck.getSize());
 	}
