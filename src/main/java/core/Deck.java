@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Random;
+
 //import java.util.Random;
 
 public class Deck {
@@ -12,6 +14,7 @@ public class Deck {
 		cards = new Card[52];
 		numCards = 52;
 		initDeck();
+		shuffle();
 	}
 	
 	
@@ -39,6 +42,41 @@ public class Deck {
 			}
 			numCards--; 
 		}
+	}
+	
+	public String toString() {
+		String output = "";
+		for(int i=0; i<numCards; i++) {
+			output += "\n" + i + "-" + cards[i].toString();
+		}
+		return output;
+	}
+	
+	public void shuffle() {
+		Card[] hold = new Card[52];
+		Random randomizer = new Random();
+		
+		
+		for(int i=0; i<52; i++) {
+			
+			boolean doubles = false;
+			int newIndex = randomizer.nextInt(52);
+			
+			for(int j=0; j<hold.length; j++) {
+				if (hold[j] == cards[newIndex]) {
+					doubles = true;
+				}
+			}
+			
+			if (doubles == false){
+				hold[i] = cards[newIndex];
+			}else {
+				i--;
+			}
+			
+		}
+		
+		cards = hold;
 	}
 
 }
