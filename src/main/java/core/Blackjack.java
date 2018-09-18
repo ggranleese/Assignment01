@@ -1,6 +1,5 @@
 package core;
 
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class Blackjack {
@@ -33,7 +32,7 @@ public class Blackjack {
 		dealerVisible = deck.dealCard();
 		dealerHidden = deck.dealCard();
 		dealerScore += dealerVisible.getVal();
-		System.out.println(dealerVisible + "\nDealer Score: " + dealerScore);
+		System.out.println("\n" + dealerVisible + "\nDealer Showing: " + dealerScore);
 		
 	}
 	
@@ -41,75 +40,109 @@ public class Blackjack {
 		
 		Card card = deck.dealCard();
 		playerScore += card.getVal();
-		if (!checkPlayerBust()) {
+		if (playerScore < 21) {
 			System.out.println("\n" + card);
 			System.out.println("PLAYER TOTAL: " + playerScore);
+		}else if(playerScore == 21) {
+			System.out.println("\n" + card);
+			System.out.println("PLAYER TOTAL: " + playerScore);
+			System.out.println("BLACJKACK");
+			checkWinner();
 		}else {
+			System.out.println("\n" + card);
+			System.out.println("PLAYER TOTAL: " + playerScore);
 			checkWinner();
 		}
 	}
 	
 	public void dealerDeal() {
-		Card card = deck.dealCard();
-		dealerScore += card.getVal();
-		if (!checkDealerBust()) {
-			System.out.println("\n" + card);
-			System.out.println("Dealer TOTAL: " + dealerScore);
-		}else {
-			checkWinner();
+		while(dealerScore <= 21) {
+			Card card = deck.dealCard();
+			dealerScore += card.getVal();
+			
+			if(dealerScore > 21) {
+				System.out.println("\n" + card);
+				System.out.println("Dealer TOTAL: " + dealerScore);
+				break;
+			}else {
+				System.out.println("\n" + card);
+				System.out.println("Dealer TOTAL: " + dealerScore);
+			}
+			
 		}
+		checkWinner();	
 	}
 	
-	private boolean checkPlayerBust() {
-		if(playerScore >21) {
-			return true;
-		}else {
-			return false;
-		}
-		
-	}
-	
-	private boolean checkDealerBust() {
-		if(dealerScore >21) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-
 	public void playerStands() {
 		
 		dealerScore += dealerHidden.getVal();
 		while(dealerScore <=16) {
 			dealerDeal();
 		}
-		checkWinner();
 	}
 	
 
-	public String checkWinner() {
+	public void checkWinner() {
 		
 		if(playerScore > 21) {
-			return("\n\n PLAYER BUSTS, DEALER WINS");
+			System.out.println("\n\n PLAYER BUSTS, DEALER WINS");
+			
 		}else if(dealerScore > 21) {
-			return("\n\n Dealer BUSTS, PLAYER WINS");
-		}
-		
-		if(playerScore > dealerScore) {
-			return("\n\n PLAYER WINS");
+			System.out.println("\n\n Dealer BUSTS, PLAYER WINS");
+			
+		}else if(playerScore > dealerScore) {
+			System.out.println("\n\n PLAYER WINS");
+			
 		}else if(dealerScore > playerScore) {
-			return("\n\n PLAYER LOSES");
+			System.out.println("\n\n PLAYER LOSES");
+			
+		}else if(playerScore == 21 && dealerScore != 21){
+			System.out.println("\n\n PLAYER WINS");
 		}else {
-			return("\n\n PUSH");
+			System.out.println("\n\n PUSH");
 		}
+			
 	}
 	
 	public static void main(String args[]) {
-		System.out.println("BLACKJACK");
+		System.out.println("BLACKJACK \n\n");
 		while(true){
-		
+			Blackjack game = new Blackjack();
+			game.firstDeal();
+			String cont = "c";
+			
+			while(true) {
+				System.out.println("(H)it or (S)tand? \n $:");
+				Scanner player = new Scanner(System.in);
+				if (player.hasNextLine()){
+					cont = player.nextLine();
+				}
+				
+				if(cont.equals("h") || cont.equals("H")) {
+					game.playerDeal();
+					
+				}else if (cont.equals("s") || cont.equals("S")){
+					game.playerStands();
+					break;
+				}else {
+					break;
+				}
+			}
+			
+			System.out.println("Press any key to play again or (Q) to (q)uit \n$:");
+			String re = "";
+			Scanner restart = new Scanner(System.in);
+			if(restart.hasNextLine()) {
+				re = restart.nextLine();
+			}
+			if (re.equals("Q") || re.equals("q")) {
+				break;
+			}else {
+				System.out.println("\n\n\n");
+			}
+			
+	
 		}
-
 	}
 
 }

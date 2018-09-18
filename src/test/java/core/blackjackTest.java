@@ -24,17 +24,5 @@ public class blackjackTest extends TestCase{
 		
 	}
 	
-	public void testWinner() {
-		Blackjack game = new Blackjack();
-		game.firstDeal();
-		game.playerStands();
-		
-		if(game.playerScore > game.dealerScore && game.playerScore < 21 && game.dealerScore < 21 ) {
-			assertEquals("\n\n PLAYER WINS", game.checkWinner());
-		}else {
-			assertEquals("\n\n PLAYER WINS", game.checkWinner());
-		}
-	}
-	
 
 }
