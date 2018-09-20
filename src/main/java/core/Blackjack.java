@@ -1,5 +1,6 @@
 package core;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Blackjack {
@@ -104,44 +105,210 @@ public class Blackjack {
 			
 	}
 	
+	@SuppressWarnings("resource")
 	public static void main(String args[]) {
 		System.out.println("BLACKJACK \n\n");
 		while(true){
-			Blackjack game = new Blackjack();
-			game.firstDeal();
-			String cont = "c";
 			
-			while(true) {
-				System.out.println("(H)it or (S)tand? \n $:");
-				Scanner player = new Scanner(System.in);
-				if (player.hasNextLine()){
-					cont = player.nextLine();
+			String fc = "";
+			String cont = "";
+			System.out.println("Would you like to use (F)ile or (C)oncole input: ");
+			
+			Scanner choice = new Scanner(System.in);
+			if(choice.hasNext()) {
+				fc = choice.nextLine();
+			}
+			
+			if(fc.equals("f") || fc.equals("F")) {
+				//FILE GAMEPLAY
+				Blackjack game = new Blackjack();
+				System.out.println("Please enter the file you wish to enter: ");
+				Scanner filePathInput = new Scanner (System.in);
+				Scanner file = null;
+				String filePath = "";
+				String readFile = "";
+				String[] cards;
+				boolean playerTurn = true;
+				
+				if(filePathInput.hasNext()) {
+					filePath = filePathInput.nextLine();
 				}
 				
-				if(cont.equals("h") || cont.equals("H")) {
-					game.playerDeal();
+				filePath = "src/main/resources/core/test.txt";
+				
+				
+				
+				try {
+					file = new Scanner(new File(filePath));
+				}catch(Exception e) {
+					System.out.println("ERROR: FILE NOT FOUND");
+				}
+				
+				while(file.hasNext()) {
+					readFile += (file.next() + " ");
+				}
+				cards = readFile.split(" ");
+				
+				
+				for(int i=0; i<cards.length; i++){
 					
-				}else if (cont.equals("s") || cont.equals("S")){
-					game.playerStands();
+					
+					if(game.playerScore <21) {
+						
+						if(i>2) {
+							System.out.println("PLAYER SCORE: " + game.playerScore);
+							System.out.println("DEALER SCORE: " + game.dealerScore);
+							System.out.println("\n");
+							System.out.println("(H)it or (S)tand? \n $:");
+							Scanner player = new Scanner(System.in);
+							if(player.hasNext()) {
+								cont = player.nextLine();
+							}
+							
+							if(cont.equals("h") || cont.equals("H")) {
+								playerTurn = true;
+							}else if(cont.equals("s") || cont.equals("S")) {
+								playerTurn = false;
+							}
+						}
+						
+						
+						
+						
+						if(cards[i].endsWith("J") || cards[i].endsWith("Q") || cards[i].endsWith("K") || cards[i].endsWith("10")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 10;
+							}else {
+								game.dealerScore = game.dealerScore + 10;
+							}
+							
+							
+						}else if (cards[i].endsWith("2")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 2;
+							}else {
+								game.dealerScore = game.dealerScore + 2;
+							}
+							
+						}else if (cards[i].endsWith("3")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 3;
+							}else {
+								game.dealerScore = game.dealerScore + 3;
+							}
+							
+						}else if (cards[i].endsWith("4")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 4;
+							}else {
+								game.dealerScore = game.dealerScore + 4;
+							}
+							
+						}else if (cards[i].endsWith("5")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 5;
+							}else {
+								game.dealerScore = game.dealerScore + 5;
+							}
+							
+						}else if (cards[i].endsWith("6")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 6;
+							}else {
+								game.dealerScore = game.dealerScore + 6;
+							}
+							
+						}else if (cards[i].endsWith("7")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 7;
+							}else {
+								game.dealerScore = game.dealerScore + 7;
+							}
+							
+						}else if (cards[i].endsWith("8")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 8;
+							}else {
+								game.dealerScore = game.dealerScore + 8;
+							}
+							
+						}else if (cards[i].endsWith("9")){
+							
+							if(playerTurn) {
+								game.playerScore = game.playerScore + 9;
+							}else {
+								game.dealerScore = game.dealerScore + 9;
+							}
+
+						}
+						
+						
+					}else {
+						game.checkWinner();
+						break;
+					}
+					
+					if(i==1) {
+						playerTurn = false;
+					}
+					
+					
+					
+				}
+				game.checkWinner();
+				
+	
+			}else if(fc.equals("c") || fc.equals("C")) {
+				//CONSOLE GAMEPLAY
+				Blackjack game = new Blackjack();
+				game.firstDeal();
+				
+				while(true) {
+					if(game.playerScore <21) {
+						System.out.println("(H)it or (S)tand? \n $:");
+						Scanner player = new Scanner(System.in);
+						if (player.hasNextLine()){
+							cont = player.nextLine();
+						}
+						
+						if(cont.equals("h") || cont.equals("H")) {
+							game.playerDeal();
+							
+						}else if (cont.equals("s") || cont.equals("S")){
+							game.playerStands();
+							break;
+						}else {
+							break;
+						}	
+					}else {
+						game.playerStands();
+						break;
+					}
+					
+				}
+				
+			}else {
+				System.out.println("\n\n\nPress any key to play again or (Q) to (q)uit \n$:");
+				String re = "";
+				Scanner restart = new Scanner(System.in);
+				if(restart.hasNextLine()) {
+					re = restart.nextLine();
+				}
+				if (re.equals("Q") || re.equals("q")) {
+					System.out.println("THANK YOU ");
 					break;
 				}else {
-					break;
-				}
+					System.out.println("\n\n\n");
+				}	
 			}
-			
-			System.out.println("Press any key to play again or (Q) to (q)uit \n$:");
-			String re = "";
-			Scanner restart = new Scanner(System.in);
-			if(restart.hasNextLine()) {
-				re = restart.nextLine();
-			}
-			if (re.equals("Q") || re.equals("q")) {
-				break;
-			}else {
-				System.out.println("\n\n\n");
-			}
-			
-	
 		}
 	}
 

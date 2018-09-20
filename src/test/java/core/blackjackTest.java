@@ -24,5 +24,27 @@ public class blackjackTest extends TestCase{
 		
 	}
 	
+	public void testPlayerHit() {
+		Blackjack game = new Blackjack();
+		game.firstDeal();
+		int firstScore = game.playerScore;
+		game.playerDeal();
+		int secondScore = game.playerScore;
+		assertTrue(firstScore < secondScore);
+	}
+	
+	public void testPlayerHitRepeat() {
+		Blackjack game = new Blackjack();
+		game.firstDeal();
+		int firstScore = game.playerScore;
+		game.playerDeal();
+		int secondScore = game.playerScore;
+		game.playerDeal();
+		int thirdScore = game.playerScore;
+		assertTrue(firstScore < secondScore);
+		assertTrue(secondScore < thirdScore);
+		
+	}
+
 
 }

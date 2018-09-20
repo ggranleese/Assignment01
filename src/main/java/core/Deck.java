@@ -41,6 +41,7 @@ public class Deck {
 			numCards--; 
 		}
 	}
+
 	
 	public Card dealCard() {
 		Card cardDelt = this.cards[0];

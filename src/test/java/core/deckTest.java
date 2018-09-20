@@ -18,6 +18,7 @@ public class deckTest extends TestCase {
 		assertEquals(51, deck.getSize());
 	}
 
+
 //	public void testDealCard() {
 //		Deck deck = new Deck();
 //		deck.dealCard();
